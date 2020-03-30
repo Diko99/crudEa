@@ -3,6 +3,7 @@ import Header from './components/header'
 import Navbar from './components/navbar'
 import Contents from './components/contents'
 import axios from 'axios'
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap'
 
 class App extends Component {
   constructor (props) {
@@ -40,14 +41,14 @@ class App extends Component {
 
   postDataSantri = () => {
     axios.post('http://localhost:4000/posts ', this.state.postDataSantri)
-      .then((result) => {
+      .then(() => {
         this.getDataSantri()
       })
   }
 
   putDataSantri = () => {
     axios.put(`http://localhost:4000/posts/${this.state.postDataSantri.id}`, this.state.postDataSantri)
-      .then(res => {
+      .then(() => {
         this.getDataSantri()
       })
   }
@@ -71,13 +72,12 @@ class App extends Component {
     }
     this.setState({
       postDataSantri: NewPostDataSantri
-    }, () => {
     })
   }
 
   onHandleDelete = (id) => {
     axios.delete(`http://localhost:4000/posts/${id}`)
-      .then(res => {
+      .then(() => {
         this.getDataSantri()
       })
   }
@@ -152,10 +152,9 @@ class App extends Component {
   }
 
   onMovePage = (event) => {
-    this.setState(
-      {
-        currentPage: Number(event.target.id)
-      }, () => this.setPagination()
+    this.setState({
+      currentPage: Number(event.target.id)
+    }, () => this.setPagination()
     )
   }
 
@@ -179,7 +178,7 @@ class App extends Component {
     const { onHandleInput, simpanDataSantri, onHandleDelete, onHandleUpdate, dataUpdate, searchedSantri, onPreviousPage, onNextPage } = this
     const { postDataSantri, value, paginationNumbers, dataSantriWithLimit, currentPage } = this.state
     return (
-      <div className='container-fluid bg-info text-light'>
+      <div className='bg-info text-light'>
         <Header />
         <Navbar
           onHandleInput={onHandleInput}
@@ -199,33 +198,30 @@ class App extends Component {
           searchedSantri={searchedSantri}
           value={value}
         />
-        <nav aria-label='Page navigation example '>
-          <ul className='pagination justify-content-end'>
-            <li className='page-item'>
-              <a className='page-link text-info' href='!#' onClick={() => onPreviousPage()}>
-                Previous
-              </a>
-            </li>
 
-            {paginationNumbers.map((item, index) => (
-              <li className={`page-item ${currentPage === item && 'active'}`} key={index}>
-                <a
-                  className='page-link text-info '
-                  href='!#'
-                  id={item}
-                  onClick={(event) => this.onMovePage(event)}
-                >
-                  {item}
-                </a>
-              </li>
-            ))}
-            <li className='page-item'>
-              <a className='page-link text-info' href='!#' onClick={() => onNextPage()}>
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <Pagination aria-label='Page navigation example' className='float-right'>
+          <PaginationItem disabled={currentPage <= 1}>
+            <PaginationLink onClick={() => onPreviousPage()}>
+              Previous
+            </PaginationLink>
+          </PaginationItem>
+
+          {paginationNumbers.map((item, index) => (
+            <PaginationItem key={index} active={currentPage === item}>
+              <PaginationLink id={item} onClick={(event) => this.onMovePage(event)}>
+                {item}
+              </PaginationLink>
+            </PaginationItem>
+          ))}x
+
+          <PaginationItem disabled={currentPage >= paginationNumbers.length}>
+            <PaginationLink onClick={() => onNextPage()}>
+              Next
+            </PaginationLink>
+          </PaginationItem>
+
+        </Pagination>
+
       </div>
     )
   }
