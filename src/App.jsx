@@ -54,7 +54,6 @@ class App extends Component {
 
   simpanDataSantri = () => {
     this.postDataSantri()
-    console.log('data telah tersimpan')
     this.setState({
       postDataSantri: {
         name: '',
@@ -79,7 +78,6 @@ class App extends Component {
   onHandleDelete = (id) => {
     axios.delete(`http://localhost:4000/posts/${id}`)
       .then(res => {
-        console.log(res)
         this.getDataSantri()
       })
   }
@@ -150,15 +148,10 @@ class App extends Component {
       dataSantriWithLimit, // merubah this.state.dataSantriWithLimit menjadi (variabel) dataSantriWithLimit
       paginationNumbers // merubah this.state.paginationNumbers menjadi (variabel) paginationNumbers
     }, () => {
-      console.table('dari setPagination')
-
-      console.table('dataSantriWithLimit', this.state.dataSantriWithLimit)
-      console.table('paginationNumbers', this.state.paginationNumbers)
     })
   }
 
   onMovePage = (event) => {
-    console.log('button diklik', event.target.id)
     this.setState(
       {
         currentPage: Number(event.target.id)
@@ -209,7 +202,7 @@ class App extends Component {
         <nav aria-label='Page navigation example '>
           <ul className='pagination justify-content-end'>
             <li className='page-item'>
-              <a className='page-link text-info' onClick={() => onPreviousPage()}>
+              <a className='page-link text-info' href='!#' onClick={() => onPreviousPage()}>
                 Previous
               </a>
             </li>
@@ -218,6 +211,7 @@ class App extends Component {
               <li className={`page-item ${currentPage === item && 'active'}`} key={index}>
                 <a
                   className='page-link text-info '
+                  href='!#'
                   id={item}
                   onClick={(event) => this.onMovePage(event)}
                 >
@@ -226,7 +220,7 @@ class App extends Component {
               </li>
             ))}
             <li className='page-item'>
-              <a className='page-link  text-info' onClick={() => onNextPage()}>
+              <a className='page-link text-info' href='!#' onClick={() => onNextPage()}>
                 Next
               </a>
             </li>

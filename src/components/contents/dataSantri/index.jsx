@@ -113,7 +113,7 @@ DataSantri.propTypes = {
   onHandleUpdate: PropTypes.func,
   onHandleInput: PropTypes.func,
   onHandleDelete: PropTypes.func,
-  postDataSantri: PropTypes.array,
+  postDataSantri: PropTypes.object,
   dataUpdate: PropTypes.func
 }
 
