@@ -1,54 +1,77 @@
 {
   "posts": [
     {
-      "id": 1584927882080,
-      "name": "Brian adam",
-      "username": "Backend developer"
+      "id": 1585622985855,
+      "name": "andiko mahendra 2",
+      "username": "frontend Developer",
+      "programStudi": " 2"
     },
     {
-      "id": 1584921882080,
-      "name": "Brian adam",
-      "username": "Backend developer 2"
+      "id": 1585623010938,
+      "name": "dadadad",
+      "studiProgram": "",
+      "programStudi": "dadad"
     },
     {
-      "id": 1584921906657,
-      "name": "Esa kencana",
-      "username": "UI/UX designer"
+      "id": 1585624192030,
+      "name": "a",
+      "programStudi": "a"
     },
     {
-      "name": "Diko Mahendra",
-      "username": "frontend",
-      "id": 1585181817951
+      "id": 1585624849353,
+      "name": "a",
+      "programStudi": "a"
     },
     {
-      "name": "melisa febriani",
-      "username": "cooking",
-      "id": 1585182330558
+      "id": 1585624938823,
+      "name": "ajj",
+      "programStudi": "akkk"
     },
     {
-      "name": "muhammad adam",
-      "username": "mobile developer",
-      "id": 1585182357222
+      "id": 1585625150007,
+      "name": "a2 2",
+      "programStudi": "a2 2"
     },
     {
-      "name": "indri lestari",
-      "username": "backend",
-      "id": 1585185521958
+      "id": 1585625150008,
+      "name": "a",
+      "studiProgram": "",
+      "programStudi": "a"
     },
     {
-      "name": "mira wiranti",
-      "username": "Casos",
-      "id": 1585185585903
+      "id": 1585625150009,
+      "name": "adadad",
+      "programStudi": "dada"
     },
     {
-      "name": "dadad",
-      "username": "dadas",
-      "id": 1585532450294
+      "id": 1585625150010,
+      "name": "dad",
+      "programStudi": "dadadad"
     },
     {
-      "name": "andiko mahendra",
-      "username": "gajelas",
-      "id": 1585533305009
+      "id": 1585627997409,
+      "name": "a",
+      "programStudi": "a"
+    },
+    {
+      "id": 1585627997410,
+      "name": "",
+      "programStudi": ""
+    },
+    {
+      "id": 1585628004233,
+      "name": "dada",
+      "programStudi": "dad"
+    },
+    {
+      "id": 1585628021705,
+      "name": "a",
+      "programStudi": "a"
+    },
+    {
+      "id": 1585628033936,
+      "name": "2a",
+      "programStudi": "a2"
     }
   ]
 }

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap'
 
 const renderDataSantri = (props) => {
   return props.searchedSantri && props.value
@@ -7,80 +8,54 @@ const renderDataSantri = (props) => {
     : props.dataSantri
 }
 
+let IdSantriToDelete
+
 const DataSantri = (props) => {
+  const [isEditModalVisible, setEditModal] = useState(false)
+  const onToggleEditModal = () => setEditModal(!isEditModalVisible)
+
+  const [isDeleteModalVisible, setDeleteModal] = useState(false)
+  const onToggleDeleteModal = () => setDeleteModal(!isDeleteModalVisible)
+
   return (
-    <table className='table table-hover text-white'>
+    <Table hover>
       <thead>
-        <tr>
-          <th scope='col'>ID</th>
-          <th scope='col'>Nama</th>
-          <th scope='col'>Jurusan</th>
-          <th scope='col' className='text-center'>Action</th>
+        <tr className='text-white'>
+          <th scope='col' style={{ width: '20%' }}>ID</th>
+          <th scope='col' style={{ width: '30%' }}>Nama</th>
+          <th scope='col' style={{ width: '25%' }}>Jurusan</th>
+          <th scope='col' style={{ width: '25%' }} className='text-center'>Action</th>
         </tr>
       </thead>
       <tbody>
         {renderDataSantri(props).map((item, id) => (
-          <tr key={id}>
+          <tr key={id} className='text-white'>
             <th scope='row'>{item.id}</th>
             <td>{item.name}</td>
-            <td>{item.username}</td>
-            <td className='row justify-content-center'>
-              <button
-                className='btn btn-sm btn-default btn-danger'
-                data-toggle='modal'
-                data-target='#dataDelete'
-              >
-                Delete
-              </button>
-              <button
-                className='btn btn-sm btn-default btn-warning text-light ml-1'
-                data-toggle='modal'
-                data-target='#dataUpdate'
-                onClick={() => props.dataUpdate(item)}
-              >
-                Edit
-              </button>
-              <div className='modal fade' id='dataUpdate' tabIndex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-                <div className='modal-dialog' role='document'>
-                  <div className='modal-content'>
-                    <div className='modal-header'>
-                      <h5 className='modal-title text-dark' id='exampleModal'>Update data santri</h5>
-                      <button type='button' className='close' data-dismiss='modal' aria-label='Close'>
-                        <span aria-hidden='true'>&times;</span>
-                      </button>
-                    </div>
-                    <div className='modal-body text-dark'>
-                      <label htmlFor='exampleInputEmail1'>Update Santri</label>
-                      <input
-                        className='form-control'
-                        placeholder='Nama Santri..'
-                        onChange={props.onHandleInput}
-                        name='name'
-                        value={props.postDataSantri.name}
-                      />
-                      <label htmlFor='exampleInputEmail1' className='mt-4'>Update Jurusan</label>
-                      <input
-                        className='form-control'
-                        placeholder='Jurusan...'
-                        onChange={props.onHandleInput}
-                        name='username'
-                        value={props.postDataSantri.username}
-                      />
-                    </div>
-                    <div className='modal-footer'>
-                      <button type='button' className='btn btn-outline-danger' data-dismiss='modal'>Close</button>
-                      <button
-                        type='button'
-                        className='btn btn-warning text-light'
-                        onClick={() => props.onHandleUpdate(item.id)}
-                      >
-                        Update
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <td>{item.programStudi}</td>
+            <td>
+              <div className='row justify-content-center'>
+                <Button
+                  color='danger'
+                  className='mr-2'
+                  onClick={() => {
+                    onToggleDeleteModal()
+                    IdSantriToDelete = item.id
+                  }}
+                >
+                  Delete
+                </Button>
+                <Button
+                  color='warning'
+                  onClick={() => {
+                    props.onDataUpdate(item)
+                    onToggleEditModal()
+                  }}
+                >
+                  Update
+                </Button>
 
+              </div>
               <div className='modal fade' id='dataDelete' tabIndex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
                 <div className='modal-dialog' role='document'>
                   <div className='modal-content'>
@@ -100,12 +75,78 @@ const DataSantri = (props) => {
                   </div>
                 </div>
               </div>
-
             </td>
           </tr>
         ))}
+        <div>
+          <Modal
+            isOpen={isEditModalVisible}
+            toggle={onToggleEditModal}
+          >
+            <ModalHeader toggle={onToggleEditModal}>Update Data Santri</ModalHeader>
+            <ModalBody>
+              <Form>
+                <FormGroup>
+                  <Label for='exampleEmail'>Nama Santri</Label>
+                  <Input
+                    type='text'
+                    name='name'
+                    placeholder='Nama santri'
+                    onChange={(e) => props.onHandleInput(e)}
+                    value={props.postDataSantri.name}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <Label for='exampleEmail'>Jurusan Santri</Label>
+                  <Input
+                    type='text'
+                    name='programStudi'
+                    placeholder='Jurusan santri'
+                    value={props.postDataSantri.programStudi}
+                    onChange={(e) => props.onHandleInput(e)}
+                  />
+                </FormGroup>
+              </Form>
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                color='info'
+                onClick={() => {
+                  onToggleEditModal()
+                  props.onHandleUpdate()
+                }}
+              >
+                Update
+              </Button>
+              <Button
+                outline
+                color='secondary'
+              >
+                Cancel
+              </Button>
+            </ModalFooter>
+          </Modal>
+        </div>
+
+        <div>
+          <Modal
+            isOpen={isDeleteModalVisible}
+            toggle={onToggleDeleteModal}
+          >
+            <ModalHeader toggle={onToggleDeleteModal}>Yakin mau menghapus ?</ModalHeader>
+            <ModalFooter>
+              <Button outline color='secondary' onClick={() => props.onHandleDelete(IdSantriToDelete)}>
+                Delete
+              </Button>
+              <Button color='info' onClick={() => onToggleDeleteModal()}>
+                Cancel
+              </Button>
+
+            </ModalFooter>
+          </Modal>
+        </div>
       </tbody>
-    </table>
+    </Table>
   )
 }
 
@@ -114,7 +155,8 @@ DataSantri.propTypes = {
   onHandleInput: PropTypes.func,
   onHandleDelete: PropTypes.func,
   postDataSantri: PropTypes.object,
-  dataUpdate: PropTypes.func
+  value: PropTypes.string,
+  onDataUpdate: PropTypes.func
 }
 
 export default DataSantri
