@@ -70,9 +70,10 @@ const Tbody = (props) => {
 
       <ActionModal
         modal='edit'
+        postDataSantri={props.postDataSantri}
         onToggleEditModal={onToggleEditModal}
         isEditModalVisible={isEditModalVisible}
-        isEditModalVisible={props.postDataSantri}
+        postDataSantri={props.postDataSantri}
         onHandleInput={props.onHandleInput}
         onHandleUpdate={props.onHandleUpdate}
       />
@@ -98,7 +99,7 @@ const ActionModal = (props) => {
   const onToggleModal = modalEdit
     ? props.onToggleEditModal
     : modalDelete
-      ? props.onToggleEditModal
+      ? props.onToggleDeletetModal
       : null
   const titleModal = modalEdit
     ? 'Update Data Santri'

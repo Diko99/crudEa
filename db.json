@@ -1,10 +1,29 @@
 {
   "posts": [
     {
-      "id": 1,
+      "id": 1585752916463,
       "name": "1",
-      "studiProgram": "",
-      "programStudi": "12"
+      "programStudi": "1"
+    },
+    {
+      "id": 1585752920868,
+      "name": "2",
+      "programStudi": "2"
+    },
+    {
+      "id": 1585752980765,
+      "name": "3",
+      "programStudi": "3"
+    },
+    {
+      "id": 1585752985074,
+      "name": "4",
+      "programStudi": "4"
+    },
+    {
+      "id": 1585752989302,
+      "name": "52",
+      "programStudi": "52"
     }
   ]
 }
