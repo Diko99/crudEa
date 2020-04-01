@@ -1,77 +1,26 @@
 {
   "posts": [
     {
-      "id": 1585622985855,
-      "name": "andiko mahendra 2",
-      "username": "frontend Developer",
-      "programStudi": " 2"
-    },
-    {
       "id": 1585623010938,
       "name": "dadadad",
       "studiProgram": "",
-      "programStudi": "dadad"
+      "programStudi": "dadad",
+      "studyProgram": "dadad"
     },
     {
       "id": 1585624192030,
-      "name": "a",
-      "programStudi": "a"
+      "name": "2a223131",
+      "programStudi": "a222adad"
     },
     {
-      "id": 1585624849353,
-      "name": "a",
-      "programStudi": "a"
-    },
-    {
-      "id": 1585624938823,
-      "name": "ajj",
-      "programStudi": "akkk"
-    },
-    {
-      "id": 1585625150007,
-      "name": "a2 2",
-      "programStudi": "a2 2"
-    },
-    {
-      "id": 1585625150008,
-      "name": "a",
-      "studiProgram": "",
-      "programStudi": "a"
-    },
-    {
-      "id": 1585625150009,
-      "name": "adadad",
+      "id": 1585712790606,
+      "name": "adad",
       "programStudi": "dada"
     },
     {
-      "id": 1585625150010,
-      "name": "dad",
-      "programStudi": "dadadad"
-    },
-    {
-      "id": 1585627997409,
-      "name": "a",
-      "programStudi": "a"
-    },
-    {
-      "id": 1585627997410,
-      "name": "",
-      "programStudi": ""
-    },
-    {
-      "id": 1585628004233,
-      "name": "dada",
-      "programStudi": "dad"
-    },
-    {
-      "id": 1585628021705,
-      "name": "a",
-      "programStudi": "a"
-    },
-    {
-      "id": 1585628033936,
-      "name": "2a",
-      "programStudi": "a2"
+      "id": 1585712797683,
+      "name": "adadadadaddaa",
+      "programStudi": "aa"
     }
   ]
 }
