@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Pagination, PaginationItem, PaginationLink } from 'reactstrap'
 import Header from './components/header'
 import MenuBar from './components/navbar'
 import Contents from './components/contents'
 import axios from 'axios'
+import MenuPagination from './components/pagination'
 
 class App extends Component {
   constructor (props) {
@@ -192,30 +192,13 @@ class App extends Component {
           onHandleInput={onHandleInput}
           onHandleDelete={onHandleDelete}
         />
-
-        <Pagination aria-label='Page navigation example' className='float-right'>
-          <PaginationItem disabled={currentPage <= 1}>
-            <PaginationLink onClick={() => onPreviousPage()}>
-              Previous
-            </PaginationLink>
-          </PaginationItem>
-
-          {paginationNumbers.map((item, index) => (
-            <PaginationItem key={index} active={currentPage === item}>
-              <PaginationLink id={item} onClick={(event) => this.onMovePage(event)}>
-                {item}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-
-          <PaginationItem disabled={currentPage >= paginationNumbers.length}>
-            <PaginationLink onClick={() => onNextPage()}>
-              Next
-            </PaginationLink>
-          </PaginationItem>
-
-        </Pagination>
-
+        <MenuPagination
+          paginationNumbers={paginationNumbers}
+          currentPage={currentPage}
+          onPreviousPage={onPreviousPage}
+          onNextPage={onNextPage}
+          onMovePage={this.onMovePage}
+        />
       </div>
     )
   }

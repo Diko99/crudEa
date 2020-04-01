@@ -1,26 +1,10 @@
 {
   "posts": [
     {
-      "id": 1585623010938,
-      "name": "dadadad",
+      "id": 1,
+      "name": "1",
       "studiProgram": "",
-      "programStudi": "dadad",
-      "studyProgram": "dadad"
-    },
-    {
-      "id": 1585624192030,
-      "name": "2a223131",
-      "programStudi": "a222adad"
-    },
-    {
-      "id": 1585712790606,
-      "name": "adad",
-      "programStudi": "dada"
-    },
-    {
-      "id": 1585712797683,
-      "name": "adadadadaddaa",
-      "programStudi": "aa"
+      "programStudi": "12"
     }
   ]
 }

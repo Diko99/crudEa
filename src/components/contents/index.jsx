@@ -5,34 +5,15 @@ import PageNotFound from './page404'
 
 const Contents = (props) => {
   return (
+    // ternary logical
     <div className='container-fluid mt-3'>
-      {props.dataSantri
-        ? (
-          <DataSantri
-            value={props.value}
-            dataSantri={props.dataSantri}
-            newDataSantri={props.newDataSantri}
-            postDataSantri={props.postDataSantri}
-            onDataUpdate={props.onDataUpdate}
-            onHandleInput={props.onHandleInput}
-            onHandleUpdate={props.onHandleUpdate}
-            onHandleDelete={props.onHandleDelete}
-          />
-        )
-        : <PageNotFound />}
+      {props.dataSantri ? <DataSantri {...props} /> : <PageNotFound />}
     </div>
   )
 }
 
-Contents.propTypes = {
-  onHandleUpdate: PropTypes.func,
-  onHandleInput: PropTypes.func,
-  onHandleDelete: PropTypes.func,
-  onDataUpdate: PropTypes.func,
-  newDataSantri: PropTypes.array,
-  dataSantri: PropTypes.array,
-  value: PropTypes.string,
-  postDataSantri: PropTypes.object
+Contents.propTypes = { // validasi props
+  dataSantri: PropTypes.array
 }
 
 export default Contents

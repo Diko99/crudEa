@@ -8,145 +8,233 @@ const renderDataSantri = (props) => {
     : props.dataSantri
 }
 
+const DataSantri = (props) => {
+  return (
+    <Table hover>
+      <Thead />
+      <Tbody {...props} />
+    </Table>
+  )
+}
+
 let IdSantriToDelete
 
-const DataSantri = (props) => {
+const Thead = () => {
+  return (
+    <thead>
+      <tr className='text-white'>
+        <th scope='col' style={{ width: '20%' }}>ID</th>
+        <th scope='col' style={{ width: '30%' }}>Nama</th>
+        <th scope='col' style={{ width: '25%' }}>Jurusan</th>
+        <th scope='col' style={{ width: '25%' }} className='text-center'>Action</th>
+      </tr>
+    </thead>
+  )
+}
+
+const Tbody = (props) => {
   const [isEditModalVisible, setEditModal] = useState(false)
   const onToggleEditModal = () => setEditModal(!isEditModalVisible)
 
   const [isDeleteModalVisible, setDeleteModal] = useState(false)
   const onToggleDeleteModal = () => setDeleteModal(!isDeleteModalVisible)
+  return (
+    <tbody>
+      {renderDataSantri(props).map((item, id) => (
+        <tr key={id} className='text-white'>
+          <th scope='row'>{item.id}</th>
+          <td>{item.name}</td>
+          <td>{item.programStudi}</td>
+          <td>
+            <div className='row justify-content-center'>
+              {/* button delete */}
+              <ActionButton
+                button='delete'
+                onClick={() => {
+                  onToggleDeleteModal()
+                  IdSantriToDelete = item.id
+                }}
+              />
+              {/* button edit */}
+              <ActionButton
+                button='edit'
+                onClick={() => {
+                  props.onDataUpdate(item)
+                  onToggleEditModal()
+                }}
+              />
+            </div>
+          </td>
+        </tr>
+      ))}
+
+      <ActionModal
+        modal='edit'
+        onToggleEditModal={onToggleEditModal}
+        isEditModalVisible={isEditModalVisible}
+        isEditModalVisible={props.postDataSantri}
+        onHandleInput={props.onHandleInput}
+        onHandleUpdate={props.onHandleUpdate}
+      />
+      <ActionModal
+        modal='delete'
+        isDeleteModalVisible={isDeleteModalVisible}
+        onToggleDeleteModal={onToggleDeleteModal}
+        onHandleDelete={props.onHandleDelete}
+      />
+    </tbody>
+  )
+}
+
+const ActionModal = (props) => {
+  const modalEdit = props.modal === 'edit'
+  const modalDelete = props.modal === 'delete'
+
+  const isOpenModal = modalEdit
+    ? props.isEditModalVisible
+    : modalDelete
+      ? props.isDeleteModalVisible
+      : null
+  const onToggleModal = modalEdit
+    ? props.onToggleEditModal
+    : modalDelete
+      ? props.onToggleEditModal
+      : null
+  const titleModal = modalEdit
+    ? 'Update Data Santri'
+    : modalDelete
+      ? 'Yakin mau hapus santri ini ?'
+      : 'Custom Title'
+  const onToggleCloseModal = modalEdit
+    ? props.onToggleEditModal
+    : modalDelete
+      ? null
+      : null
+
+  const modalBodyEdit = modalEdit
+    ? (
+      <ModalHeaderEdit
+        onChange={(e) => props.onHandleInput(e)}
+        postDataSantri={props.postDataSantri}
+        onToggleEditModal={props.onToggleEditModal}
+        onClick={() => {
+          props.onToggleEditModal()
+          props.onHandleUpdate()
+        }}
+      />
+    )
+    : modalDelete
+      ? (
+        <ModalFooterDelete
+          onToggleDeleteModal={props.onToggleDeleteModal}
+          onClick={() => props.onHandleDelete(IdSantriToDelete)}
+        />
+      )
+      : null
 
   return (
-    <Table hover>
-      <thead>
-        <tr className='text-white'>
-          <th scope='col' style={{ width: '20%' }}>ID</th>
-          <th scope='col' style={{ width: '30%' }}>Nama</th>
-          <th scope='col' style={{ width: '25%' }}>Jurusan</th>
-          <th scope='col' style={{ width: '25%' }} className='text-center'>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {renderDataSantri(props).map((item, id) => (
-          <tr key={id} className='text-white'>
-            <th scope='row'>{item.id}</th>
-            <td>{item.name}</td>
-            <td>{item.programStudi}</td>
-            <td>
-              <div className='row justify-content-center'>
-                <Button
-                  color='danger'
-                  className='mr-2'
-                  onClick={() => {
-                    onToggleDeleteModal()
-                    IdSantriToDelete = item.id
-                  }}
-                >
-                  Delete
-                </Button>
-                <Button
-                  color='warning'
-                  onClick={() => {
-                    props.onDataUpdate(item)
-                    onToggleEditModal()
-                  }}
-                >
-                  Update
-                </Button>
+    <Modal
+      isOpen={isOpenModal}
+      toggle={onToggleModal}
+    >
+      <ModalHeader toggle={onToggleCloseModal}>{titleModal}</ModalHeader>
+      {modalBodyEdit}
+      <ModalFooter />
+    </Modal>
+  )
+}
 
-              </div>
-              <div className='modal fade' id='dataDelete' tabIndex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-                <div className='modal-dialog' role='document'>
-                  <div className='modal-content'>
-                    <div className='modal-header justify-content-center'>
-                      <h5 className='modal-title text-dark ' id='exampleModal'>
-                        Yakin mau menghapus data santri ?
-                      </h5>
-                    </div>
-                    <div className='modal-footer justify-content-center'>
-                      <button className='btn btn-sm btn-default btn-danger' onClick={() => props.onHandleDelete(item.id)}>
-                        Hapus
-                      </button>
-                      <button type='button' className='btn btn-secondary btn-sm' data-dismiss='modal'>
-                        Close
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </td>
-          </tr>
-        ))}
-        <div>
-          <Modal
-            isOpen={isEditModalVisible}
-            toggle={onToggleEditModal}
-          >
-            <ModalHeader toggle={onToggleEditModal}>Update Data Santri</ModalHeader>
-            <ModalBody>
-              <Form>
-                <FormGroup>
-                  <Label for='exampleEmail'>Nama Santri</Label>
-                  <Input
-                    type='text'
-                    name='name'
-                    placeholder='Nama santri'
-                    onChange={(e) => props.onHandleInput(e)}
-                    value={props.postDataSantri.name}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for='exampleEmail'>Jurusan Santri</Label>
-                  <Input
-                    type='text'
-                    name='programStudi'
-                    placeholder='Jurusan santri'
-                    value={props.postDataSantri.programStudi}
-                    onChange={(e) => props.onHandleInput(e)}
-                  />
-                </FormGroup>
-              </Form>
-            </ModalBody>
-            <ModalFooter>
-              <Button
-                color='info'
-                onClick={() => {
-                  onToggleEditModal()
-                  props.onHandleUpdate()
-                }}
-              >
-                Update
-              </Button>
-              <Button
-                outline
-                color='secondary'
-              >
-                Cancel
-              </Button>
-            </ModalFooter>
-          </Modal>
-        </div>
+const ModalFooterDelete = (props) => {
+  return (
+    <ModalFooter>
+      <Button
+        outline
+        color='secondary'
+        onClick={props.onClick}
+      >
+        Delete
+      </Button>
+      <Button
+        color='info'
+        onClick={() => props.onToggleDeleteModal()}
+      >
+        Cancel
+      </Button>
+    </ModalFooter>
+  )
+}
 
-        <div>
-          <Modal
-            isOpen={isDeleteModalVisible}
-            toggle={onToggleDeleteModal}
-          >
-            <ModalHeader toggle={onToggleDeleteModal}>Yakin mau menghapus ?</ModalHeader>
-            <ModalFooter>
-              <Button outline color='secondary' onClick={() => props.onHandleDelete(IdSantriToDelete)}>
-                Delete
-              </Button>
-              <Button color='info' onClick={() => onToggleDeleteModal()}>
-                Cancel
-              </Button>
+const ModalHeaderEdit = (props) => {
+  return (
+    <div>
+      <ModalBody>
+        <Form>
+          <FormGroup>
+            <Label for='exampleEmail'>Nama Santri</Label>
+            <Input
+              type='text'
+              name='name'
+              placeholder='Nama santri'
+              onChange={props.onChange}
+              value={props.postDataSantri.name}
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label for='exampleEmail'>Jurusan Santri</Label>
+            <Input
+              type='text'
+              name='programStudi'
+              placeholder='Jurusan santri'
+              value={props.postDataSantri.programStudi}
+              onChange={props.onChange}
+            />
+          </FormGroup>
+        </Form>
+      </ModalBody>
+      <ModalFooter>
+        <Button
+          color='info'
+          onClick={props.onClick}
+        >
+          Update
+        </Button>
+        <Button
+          outline
+          color='secondary'
+        >
+          Cancel
+        </Button>
+      </ModalFooter>
+    </div>
+  )
+}
 
-            </ModalFooter>
-          </Modal>
-        </div>
-      </tbody>
-    </Table>
+const ActionButton = (props) => {
+  const ButtonEdit = props.button === 'edit'
+  const ButtonDelete = props.button === 'delete'
+
+  const color = ButtonEdit
+    ? 'warning'
+    : ButtonDelete
+      ? 'danger'
+      : ''
+  const className = ButtonDelete
+    ? 'mr-2'
+    : ButtonEdit
+      ? '' : ''
+  const title = ButtonEdit
+    ? 'Edit'
+    : ButtonDelete
+      ? 'Delete' : ''
+
+  return (
+    <Button
+      color={color}
+      className={className}
+      onClick={props.onClick}
+    >
+      {title}
+    </Button>
   )
 }
 
@@ -155,8 +243,6 @@ DataSantri.propTypes = {
   onHandleInput: PropTypes.func,
   onHandleDelete: PropTypes.func,
   postDataSantri: PropTypes.object,
-  value: PropTypes.string,
   onDataUpdate: PropTypes.func
 }
-
 export default DataSantri
