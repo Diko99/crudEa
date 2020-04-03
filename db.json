@@ -1,29 +1,35 @@
 {
   "posts": [
     {
-      "id": 1585752916463,
+      "id": 1585874625323,
+      "name": "diko",
+      "programStudi": "diko"
+    },
+    {
+      "id": 1585874632161,
+      "name": "ciko2",
+      "programStudi": "ciko2"
+    },
+    {
+      "id": 1585874632162,
       "name": "1",
+      "studiProgram": "",
       "programStudi": "1"
     },
     {
-      "id": 1585752920868,
+      "id": 1585874632163,
       "name": "2",
       "programStudi": "2"
     },
     {
-      "id": 1585752980765,
+      "id": 1585874632164,
       "name": "3",
       "programStudi": "3"
     },
     {
-      "id": 1585752985074,
+      "id": 1585874632165,
       "name": "4",
       "programStudi": "4"
-    },
-    {
-      "id": 1585752989302,
-      "name": "52",
-      "programStudi": "52"
     }
   ]
 }
