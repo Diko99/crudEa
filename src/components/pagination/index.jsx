@@ -1,34 +1,71 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Pagination, PaginationItem, PaginationLink } from 'reactstrap'
 import ProptTypes from 'prop-types'
 
-const MenuPagination = (props) => {
-  return (
-    <Pagination aria-label='Page navigation example' className='float-right'>
-      <PaginationItem disabled={props.currentPage <= 1}>
-        <PaginationLink onClick={() => props.onPreviousPage()}>
-          Previous
+class MenuPagination extends Component {
+  render () {
+    const prevButton = {
+      disabled: this.isDisabledPrevious(),
+      onClick: this.props.onPreviousPage,
+      title: 'Previous'
+    }
+    const nextButton = {
+      disabled: this.isDisabledNext(),
+      onClick: this.props.onNextPage,
+      title: 'Next'
+    }
+    return (
+      <Pagination
+        aria-label='Page navigation example'
+        className='float-right'
+        size='sm'
+      >
+        {this.renderActionButton(prevButton)}
+        {this.renderPaginationButton()}
+        {this.renderActionButton(nextButton)}
+      </Pagination>
+    )
+  }
+
+  renderActionButton = (props = { active: false, id: 'id-kosongan' }) => {
+    return (
+      <PaginationItem
+        key={props.index}
+        disabled={props.disabled}
+        active={props.active}
+      >
+        <PaginationLink
+          id={props.id}
+          onClick={props.onClick}
+        >
+          {props.title}
         </PaginationLink>
+
       </PaginationItem>
+    )
+  }
 
-      {props.paginationNumbers.map((item, index) => (
-        <PaginationItem key={index} active={props.currentPage === item}>
-          <PaginationLink id={item} onClick={(event) => props.onMovePage(event)}>
-            {item}
-          </PaginationLink>
-        </PaginationItem>
-      ))}
+  renderPaginationButton = () => {
+    return this.props.paginationNumbers.map((item, index) => {
+      const paginationNumberButton = {
+        key: index,
+        active: this.props.currentPage === item,
+        id: item,
+        title: item,
+        onClick: this.props.onMovePage
+      }
+      return this.renderActionButton(paginationNumberButton)
+    })
+  }
 
-      <PaginationItem disabled={props.currentPage >= props.paginationNumbers.length}>
-        <PaginationLink onClick={() => props.onNextPage()}>
-          Next
-        </PaginationLink>
-      </PaginationItem>
+  isDisabledPrevious = () => {
+    return this.props.currentPage <= 1
+  }
 
-    </Pagination>
-  )
+  isDisabledNext = () => {
+    return this.props.currentPage === this.props.paginationNumbers.length
+  }
 }
-
 MenuPagination.proptTypes = {
   currentPage: ProptTypes.func,
   paginationNumbers: ProptTypes.array,
