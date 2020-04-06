@@ -19,18 +19,76 @@ const ActionButton = (props) => {
 }
 
 const ActionModal = (props) => {
+  const actionDelete = props.titleAction === 'hapus'
+  const actionUpdate = props.titleAction === 'edit'
+  const actionAddSantri = props.titleAction === 'addsantri'
+
+  const titleActionHeader = actionDelete
+    ? 'Apakah anda Yakin ingin mengahapus santri ini ?'
+    : actionUpdate
+      ? 'Update data santri'
+      : actionAddSantri ? 'Tambah Santri' : ''
+
+  const modalHeader = actionDelete
+    ? null
+    : actionUpdate
+      ? (
+        <FormModalInput
+          {...props}
+          value={props.postDataSantri}
+        />
+      )
+      : actionAddSantri
+        ? <FormModalInput {...props} /> : ''
+
+  const isModalVisible = actionDelete
+    ? props.isDeleteModalVisible
+    : actionUpdate
+      ? props.isEditModalVisible
+      : actionAddSantri
+        ? props.isCreateModalVisible : ''
+
+  const titleButtonLeft = actionDelete
+    ? 'Hapus'
+    : actionUpdate
+      ? 'Update'
+      : actionAddSantri
+        ? 'Tambah Santri' : ''
+
+  const titleButtonRight = actionDelete
+    ? 'Batal'
+    : actionUpdate
+      ? 'Batal'
+      : actionAddSantri
+        ? 'Batal' : ''
+
+  const onClickButton = actionUpdate
+    ? () => {
+      props.onClickButton()
+      props.onToggleModal()
+    }
+    : actionDelete
+      ? () => {
+        props.onHandleDelete()
+        props.onToggleModal()
+      }
+      : actionAddSantri
+        ? props.onClick : ''
+
   return (
-    <Modal
-      isOpen={props.isCreateModalVisible}
-      toggle={props.onToggleCreateModal}
-    >
+    <Modal isOpen={isModalVisible}>
       <ModalHeader
         toggle={props.onToggleCreateModal}
       >
-        {props.label}
+        {titleActionHeader}
       </ModalHeader>
-      <FormModalInput {...props} />
-      <ActionButtonFooter {...props} />
+      {modalHeader}
+      <ActionButtonFooter
+        {...props}
+        titleButtonLeft={titleButtonLeft}
+        titleButtonRight={titleButtonRight}
+        onClick={onClickButton}
+      />
     </Modal>
   )
 }
@@ -39,15 +97,17 @@ const ActionButtonFooter = (props) => {
   return (
     <ModalFooter>
       <ActionButton
-        titleButton='Simpan Data'
+        titleButton={props.titleButtonLeft}
         colorButton='info'
         onClickButton={props.onClick}
+        className={props.className}
       />
       <ActionButton
-        titleButton='Batal'
+        className={props.className}
+        titleButton={props.titleButtonRight}
         colorButton='secondary'
         outline
-        onClickButton={props.onToggleCreateModal}
+        onClickButton={props.onToggleModal}
       />
     </ModalFooter>
   )
@@ -60,11 +120,13 @@ const FormModalInput = (props) => {
         label='Nama Santri'
         name='name'
         placeholder='Nama Santri'
+        value={props.postDataSantri.name}
         onChange={(e) => props.onHandleInput(e)}
       />
       <FormInput
         label='Jurusan Santri'
         name='programStudi'
+        value={props.postDataSantri.programStudi}
         placeholder='Jurusan Santri'
         onChange={(e) => props.onHandleInput(e)}
       />
@@ -116,12 +178,23 @@ ActionButton.propTypes = {
 }
 ActionButtonFooter.propTypes = {
   onClick: PropTypes.func,
-  onToggleCreateModal: PropTypes.func
+  onToggleModal: PropTypes.func,
+  titleButtonRight: PropTypes.string,
+  titleButtonLeft: PropTypes.string,
+  className: PropTypes.string
 }
 ActionModal.propTypes = {
+  onClickButton: PropTypes.string,
+  titleAction: PropTypes.string,
   isCreateModalVisible: PropTypes.bool,
   onToggleCreateModal: PropTypes.func,
-  label: PropTypes.string
+  label: PropTypes.string,
+  postDataSantri: PropTypes.object,
+  isDeleteModalVisible: PropTypes.string,
+  isEditModalVisible: PropTypes.string,
+  onToggleModal: PropTypes.string,
+  onHandleDelete: PropTypes.string,
+  onClick: PropTypes.string
 }
 FormModalInput.propTypes = {
   onHandleInput: PropTypes.func

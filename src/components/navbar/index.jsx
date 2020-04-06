@@ -16,7 +16,7 @@ const MenuBar = (props) => {
       />
       <ActionSearch {...props} />
       <ActionModal
-        label='Tambah Santri'
+        titleAction='addsantri'
         isCreateModalVisible={isCreateModalVisible}
         onToggleCreateModal={() => onToggleCreateModal()}
         onClick={() => {
