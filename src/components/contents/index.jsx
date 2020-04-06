@@ -5,14 +5,13 @@ import PageNotFound from './page404'
 
 const Contents = (props) => {
   return (
-    // ternary logical
     <div className='container-fluid mt-3'>
       {props.dataSantri ? <DataSantri {...props} /> : <PageNotFound />}
     </div>
   )
 }
 
-Contents.propTypes = { // validasi props
+Contents.propTypes = {
   dataSantri: PropTypes.array
 }
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Table, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap'
+import { Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { ActionButton, FormInput } from '../../Action'
 
 let IdSantriToDelete
 let modalVisible
@@ -50,7 +51,7 @@ const Tbody = (props) => {
                 titleButton='Hapus'
                 colorButton='danger'
                 className='mr-2'
-                onClick={() => {
+                onClickButton={() => {
                   IdSantriToDelete = item.id
                   modalVisible = 'delete'
                   onToggleModal()
@@ -59,7 +60,7 @@ const Tbody = (props) => {
               <ActionButton
                 titleButton='Ubah'
                 colorButton='warning'
-                onClick={() => {
+                onClickButton={() => {
                   props.onDataUpdate(item)
                   modalVisible = 'edit'
                   onToggleModal()
@@ -142,14 +143,12 @@ const ActionModal = (props) => {
         classNameBorder={classNameBorder}
         titleHeader={titleHeader}
       />
-
       <ActionModalEdit
         postDataSantri={props.postDataSantri}
         onChange={props.onHandleInput}
         isModalVisible={EditModal}
         onToggleModal={props.onToggleModal}
       />
-
       <ActionModalFooter
         classNameBorder={classNameBorder}
         titleButton={titleButton}
@@ -177,28 +176,20 @@ const ActionModalEdit = (props) => {
   if (props.isModalVisible) {
     return (
       <ModalBody>
-        <Form>
-          <FormGroup>
-            <Label for='exampleEmail'>Nama Santri</Label>
-            <Input
-              type='text'
-              name='name'
-              placeholder='Nama santri'
-              onChange={props.onChange}
-              value={props.postDataSantri.name}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label for='exampleEmail'>Jurusan Santri</Label>
-            <Input
-              type='text'
-              name='programStudi'
-              placeholder='Jurusan santri'
-              value={props.postDataSantri.programStudi}
-              onChange={props.onChange}
-            />
-          </FormGroup>
-        </Form>
+        <FormInput
+          label='Update Nama Santri'
+          placeholder='Nama Santri'
+          name='name'
+          onChange={props.onChange}
+          value={props.postDataSantri.name}
+        />
+        <FormInput
+          label='Update Jurusan Santri'
+          placeholder='Jurusan Santri'
+          name='programStudi'
+          onChange={props.onChange}
+          value={props.postDataSantri.programStudi}
+        />
       </ModalBody>
     )
   } else {
@@ -212,30 +203,18 @@ const ActionModalFooter = (props) => {
         className='px-5'
         titleButton={props.titleButton}
         colorButton={props.colorButtonLeft}
-        outlineButton={props.DeleteModal}
-        onClick={props.onClickButton}
+        outline={props.DeleteModal}
+        onClickButton={props.onClickButton}
         onToggleModal={props.onToggleModal}
       />
       <ActionButton
         titleButton='Batal'
         colorButton={props.colorButtonRight}
-        outlineButton={props.EditModal}
-        onClick={props.onToggleModal}
+        outline={props.EditModal}
+        onClickButton={props.onToggleModal}
         className='px-5'
       />
     </ModalFooter>
-  )
-}
-const ActionButton = (props) => {
-  return (
-    <Button
-      outline={props.outlineButton}
-      color={props.colorButton}
-      className={props.className}
-      onClick={props.onClick}
-    >
-      {props.titleButton}
-    </Button>
   )
 }
 
@@ -244,7 +223,8 @@ ActionModal.propTypes = {
   onToggleModal: PropTypes.func,
   isModalVisible: PropTypes.bool,
   onHandleDelete: PropTypes.func,
-  postDataSantri: PropTypes.object
+  postDataSantri: PropTypes.object,
+  onHandleUpdate: PropTypes.func
 }
 ActionModalFooter.propTypes = {
   classNameBorder: PropTypes.string,
@@ -255,13 +235,6 @@ ActionModalFooter.propTypes = {
   EditModal: PropTypes.bool,
   colorButtonLeft: PropTypes.string,
   onToggleModal: PropTypes.func
-}
-ActionButton.propTypes = {
-  outlineButton: PropTypes.bool,
-  colorButton: PropTypes.string,
-  className: PropTypes.string,
-  onClick: PropTypes.func,
-  titleButton: PropTypes.string
 }
 Tbody.propTypes = {
   postDataSantri: PropTypes.object,

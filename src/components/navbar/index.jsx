@@ -11,11 +11,12 @@ const MenuBar = (props) => {
     <Navbar color='light' light expand='md' className='rounded'>
       <ActionButton
         titleButton='Tambah Santri'
-        color='info'
+        colorButton='info'
         onClickButton={onToggleCreateModal}
       />
       <ActionSearch {...props} />
       <ActionModal
+        label='Tambah Santri'
         isCreateModalVisible={isCreateModalVisible}
         onToggleCreateModal={() => onToggleCreateModal()}
         onClick={() => {

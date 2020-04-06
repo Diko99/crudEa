@@ -8,7 +8,8 @@ import {
 const ActionButton = (props) => {
   return (
     <Button
-      color={props.color}
+      className={props.className}
+      color={props.colorButton}
       onClick={props.onClickButton}
       outline={props.outline}
     >
@@ -17,29 +18,16 @@ const ActionButton = (props) => {
   )
 }
 
-const ActionButtonFooter = (props) => {
-  return (
-    <ModalFooter>
-      <ActionButton
-        titleButton='Simpan Data'
-        color='info'
-        onClickButton={props.onClick}
-      />
-      <ActionButton
-        titleButton='Batal'
-        color='secondary'
-        outline
-        onClickButton={props.onToggleCreateModal}
-      />
-    </ModalFooter>
-  )
-}
-
 const ActionModal = (props) => {
   return (
-    <Modal isOpen={props.isCreateModalVisible} toggle={props.onToggleCreateModal}>
-      <ModalHeader toggle={props.onToggleCreateModal}>
-        Tambah Santri
+    <Modal
+      isOpen={props.isCreateModalVisible}
+      toggle={props.onToggleCreateModal}
+    >
+      <ModalHeader
+        toggle={props.onToggleCreateModal}
+      >
+        {props.label}
       </ModalHeader>
       <FormModalInput {...props} />
       <ActionButtonFooter {...props} />
@@ -47,16 +35,34 @@ const ActionModal = (props) => {
   )
 }
 
+const ActionButtonFooter = (props) => {
+  return (
+    <ModalFooter>
+      <ActionButton
+        titleButton='Simpan Data'
+        colorButton='info'
+        onClickButton={props.onClick}
+      />
+      <ActionButton
+        titleButton='Batal'
+        colorButton='secondary'
+        outline
+        onClickButton={props.onToggleCreateModal}
+      />
+    </ModalFooter>
+  )
+}
+
 const FormModalInput = (props) => {
   return (
     <ModalBody>
-      <FromInput
+      <FormInput
         label='Nama Santri'
         name='name'
         placeholder='Nama Santri'
         onChange={(e) => props.onHandleInput(e)}
       />
-      <FromInput
+      <FormInput
         label='Jurusan Santri'
         name='programStudi'
         placeholder='Jurusan Santri'
@@ -66,7 +72,7 @@ const FormModalInput = (props) => {
   )
 }
 
-const FromInput = (props) => {
+const FormInput = (props) => {
   return (
     <FormGroup>
       <Label for='exampleEmail'>{props.label}</Label>
@@ -102,7 +108,8 @@ const ActionSearch = (props) => {
 }
 
 ActionButton.propTypes = {
-  color: PropTypes.string,
+  className: PropTypes.string,
+  colorButton: PropTypes.string,
   onClickButton: PropTypes.func,
   outline: PropTypes.bool,
   titleButton: PropTypes.string
@@ -113,12 +120,13 @@ ActionButtonFooter.propTypes = {
 }
 ActionModal.propTypes = {
   isCreateModalVisible: PropTypes.bool,
-  onToggleCreateModal: PropTypes.func
+  onToggleCreateModal: PropTypes.func,
+  label: PropTypes.string
 }
 FormModalInput.propTypes = {
   onHandleInput: PropTypes.func
 }
-FromInput.propTypes = {
+FormInput.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string,
   placeholder: PropTypes.string,
@@ -131,4 +139,4 @@ ActionSearch.propTypes = {
   isNavbarVisible: PropTypes.bool
 }
 
-export { ActionButton, ActionSearch, ActionModal }
+export { ActionButton, ActionSearch, ActionModal, FormInput }
